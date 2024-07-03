@@ -1,40 +1,45 @@
-class empleados():
-  
-    def __init__(self,nombre,apellido,edad,salario,dni,fech_vinc):
-        self.__nombre = nombre
-        self.__apellido = apellido
-        self.__edad = edad
-        self.__salario = salario
-        self.__dni=dni
-        self.__fech_vinc= fech_vinc
-        
-    def get_name_complet(self):
-        name=self.__nombre + self.__apellido
-        return name
-    
-class jefe(empleados):
-    
-    def __init__(self,nombre,apellido,edad,salario,dni,fech_vinc,empleaCarg):
-        super.__init__(nombre,apellido,edad,salario,dni,fech_vinc)
-        self.empleaCarg = empleaCarg
-        
-class area():
-    
-    def __init__(self,nombArea,desc,listEmp):
-        self.__nombre= nombArea
-        self.__Desc= desc
-        self.__lista= listEmp
-        
-    def Agreg_emp(self):
-        pass
-        
-    
-emp1= empleados("Brian ","Florez",24,1350000,1061818886,"22-05-2024")
-jef1= jefe("tomas ","Florez",24,1350000,1061818886,"22-05-2024")
-##print(emp1.get_name_complet())
+from datetime import datetime
 
-print("Jefe: ", jef1)
-print("Empleado: ",emp1)
+class Empleado:
+    def __init__(self, nombre, apellido, edad, salario, id, fech_vinc):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.edad = edad
+        self.salario = salario
+        self.id = id
+        self.fech_vinc = datetime.strptime(fech_vinc, '%Y-%m-%d')
+    
+    def obtener_nombre_completo(self):
+        return f"{self.nombre} {self.apellido}"
+    
+    def obtener_sueldo(self):
+        return self.salario
+    
+    def obtener_informacion(self):
+        return (f"Nombre: {self.obtener_nombre_completo()}, Edad: {self.edad}, Salario: {self.salario}, "
+                f"DNI: {self.id}, Fecha de vinculación: {self.fech_vinc.strftime('%Y-%m-%d')}")
+
+class Jefe(Empleado):
+    def __init__(self, nombre, apellido, edad, salario, id, fech_vinc):
+        super().__init__(nombre, apellido, edad, salario, id, fech_vinc)
+        self.empleados_a_cargo = []
+    
+    def agregar_empleado(self, empleado):
+        if isinstance(empleado, Empleado) and empleado not in self.empleados_a_cargo:
+            self.empleados_a_cargo.append(empleado)
+            print(f"Empleado {empleado.obtener_nombre_completo()} agregado bajo el cargo del jefe {self.obtener_nombre_completo()}.")
+    
+    def eliminar_empleado(self, empleado):
+        if empleado in self.empleados_a_cargo:
+            self.empleados_a_cargo.remove(empleado)
+            print(f"Empleado {empleado.obtener_nombre_completo()} eliminado bajo el cargo del jefe {self.obtener_nombre_completo()} (notificación de despido).")
+    
+    def obtener_empleados_a_cargo(self):
+        return [empleado.obtener_nombre_completo() for empleado in self.empleados_a_cargo]
+    
+    def obtener_informacion(self):
+        empleados_str = ", ".join(self.obtener_empleados_a_cargo()) or "Ninguno"
+        return super().obtener_informacion() + f", Empleados a cargo: {empleados_str}"
     
  
     

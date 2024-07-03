@@ -1,3 +1,5 @@
 Proyecto talento Tech
 
 Sistema gestión de empleados.
+
+03/07/2024- 12:00 PM - Creación y ajuste Class Empleados y Class Jefe
