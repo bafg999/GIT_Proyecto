@@ -25,14 +25,18 @@ class Jefe(Empleado):
         self.empleados_a_cargo = []
     
     def agregar_empleado(self, empleado):
-        if isinstance(empleado, Empleado) and empleado not in self.empleados_a_cargo:
-            self.empleados_a_cargo.append(empleado)
-            print(f"Empleado {empleado.nombre_completo()} agregado bajo el cargo del jefe {self.nombre_completo()}.\n")
+        for emp in self.empleados_a_cargo:
+            if emp == empleado:
+                return
+        self.empleados_a_cargo.append(empleado)
+        print(f"Empleado {empleado.nombre_completo()} agregado bajo el cargo del jefe {self.nombre_completo()}.\n")
     
     def eliminar_empleado(self, empleado):
-        if empleado in self.empleados_a_cargo:
-            self.empleados_a_cargo.remove(empleado)
-            print(f"Empleado {self.nombre_completo()} eliminado bajo el cargo del jefe {self.nombre_completo()} (notificación de despido).\n")
+        for emp in self.empleados_a_cargo:
+            if emp == empleado:
+                self.empleados_a_cargo.remove(empleado)
+                print(f"Empleado {empleado.nombre_completo()} eliminado bajo el cargo del jefe {self.nombre_completo()}\n(notificación de despido).\n")
+                return
     
     def get_empleados_a_cargo(self):
         return [empleado.nombre_completo() for empleado in self.empleados_a_cargo]
@@ -49,14 +53,18 @@ class Area:
         self.jefe_area = None
     
     def agregar_empleado(self, empleado):
-        if isinstance(empleado, Empleado) and empleado not in self.empleados:
-            self.empleados.append(empleado)
-            print(f"Empleado {empleado.nombre_completo()} agregado al área {self.__nombre}.\n")
-    
+        for emp in self.empleados:
+            if emp == empleado:
+                return
+        self.empleados.append(empleado)
+        print(f"Empleado {empleado.nombre_completo()} agregado al área {self.__nombre}.\n")
+        
     def eliminar_empleado(self, empleado):
-        if empleado in self.empleados:
-            self.empleados.remove(empleado)
-            print(f"Empleado {empleado.nombre_completo()} eliminado del área {self.nombre}.\n")
+        for emp in self.empleados:
+            if emp == empleado:
+                self.empleados.remove(empleado)
+                print(f"Empleado {empleado.nombre_completo()} eliminado del área {self.__nombre}.\n")
+                return
     
     def asignar_jefe(self, jefe):
         if isinstance(jefe, Jefe):
@@ -72,7 +80,7 @@ class Area:
     def get_informacion(self):
         empleados_str = ", ".join(self.obtener_empleados()) or "Ninguno"
         jefe_str = self.get_jefe_area()
-        return f"Área: {self.__nombre}, Descripción: {self.__descripcion}\nJefe Área: {jefe_str}, Empleados: {empleados_str}"
+        return f"Área: {self.__nombre}, Descripción: {self.__descripcion}\nJefe Área: {jefe_str}, Empleados: {empleados_str}\n"
 
     
 empleado1 = Empleado("Juan", "Pérez", 30, 50000, "12345678", "2020-01-15")
@@ -92,3 +100,6 @@ print(empleado1.get_informacion())
 print(empleado2.get_informacion())
 print(jefe.get_informacion())
 print(area.get_informacion())  
+
+area.eliminar_empleado(empleado1)
+jefe.eliminar_empleado(empleado1)
