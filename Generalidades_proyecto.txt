@@ -2,6 +2,7 @@ Proyecto talento Tech
 
 Sistema gestión de empleados.
 03/07/2024- 12:00 PM - Creación y ajuste Class Empleados y Class Jefe
-03/07/2024- 1:39 PM - Creación Class Area
+03/07/2024- 1:39 PM - Creación Class Área
 03/07/2024- 2.48 PM Encapsulación y optimización
 03/07/2024- 6:41 PM Actualización código-ciclos FOR
+04/07/2024- 11:19 AM Actualización métodos agregar
